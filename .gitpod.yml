@@ -1,6 +1,7 @@
 tasks:
   - name: aws-cli
-      export AWS_CLI_AUTO_PROMPT=on-portial
+    env:
+      AWS_CLI_AUTO_PROMPT: on-portial
     init: echo 'init script' # runs during prebuild => https://www.gitpod.io/docs/configure/projects/prebuilds
     before:
       cd /workspace 
