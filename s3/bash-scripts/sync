@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+echo "== sync"
+# Exit immediately if any command returns a non-zero status
+set -e
+
+# check for bucket name
+if [ -z "$1" ]; then
+    echo "There needs to be a bucket name (./sync my-bucket-name)"
+    exit 1
+fi
+
+# check for filename prefix
+if [ -z "$2" ]; then
+    echo "There needs to be a filename prefix (./sync my-bucket-name prefix)"
+    exit 1
+fi
+BUCKET_NAME=$1
+FILE_NAME=$2
+
+# Folder to storage these files
+OUTPUT_DIR="./temp"
+mkdir -p $OUTPUT_DIR
+rm -rf $OUTPUT_DIR/*
+
+# generate random files
+NUM_FILES=$((RANDOM % 6 + 5))
+for i in $(seq 1 $NUM_FILES); do
+    FILE_NAME="$OUTPUT_DIR/file_$i.txt"
+    head -c 100 </dev/urandom > $FILE_NAME
+    echo "Created $FILE_NAME"
+done
+
+tree $OUTPUT_DIR
+
+aws s3 sync $OUTPUT_DIR s3://$BUCKET_NAME/files 

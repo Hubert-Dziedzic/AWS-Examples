@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+echo "== put object"
+
+# check for bucket name
+if [ -z "$1" ]; then
+    echo "There needs to be a bucket name (./sync my-bucket-name)"
+    exit 1
+fi
+
+# check for filename prefix
+if [ -z "$2" ]; then
+    echo "There needs to be a filename prefix (./sync my-bucket-name prefix)"
+    exit 1
+fi
+BUCKET_NAME=$1
+FILE_NAME=$2
+OBJECT_KEY=$(basename "$FILE_NAME")
+
+aws s3api put-object \
+--bucket $BUCKET_NAME \
+--body $FILE_NAME \
+--key $OBJECT_KEY
