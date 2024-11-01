@@ -4,6 +4,7 @@ tasks:
     before: |
       sudo apt-get install tree
   # https://learn.microsoft.com/en-us/powershell/scripting/install/install-ubuntu?view=powershell-7.4
+  # https://docs.aws.amazon.com/powershell/latest/userguide/pstools-welcome.html
   - name: PowerShell
     before: |
       sudo apt-get update
