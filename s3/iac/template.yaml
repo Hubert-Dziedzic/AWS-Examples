@@ -1,0 +1,8 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: A simple s3 Bucket
+
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-s3-bucket.html#aws-resource-s3-bucket--examples--Create_an_S3_bucket
+Resources:
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
+    # we dont need to supply a Bcuekt Name as AWS will generate a random name

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+echo "== deploy s3 bucket via CFN"
+
+STACNK_NAME="cnd-s3-simple"
+
+aws cloudformation delete-stack \
+--stack-name $STACNK_NAME
