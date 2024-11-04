@@ -1,4 +1,7 @@
 tasks:
+  - name: SDK
+    before: |
+      npm install -g aws-cdk
 # https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
   - name: teraform
     before: |
