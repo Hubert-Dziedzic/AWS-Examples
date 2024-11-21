@@ -1,0 +1,18 @@
+{
+    "Statement": [
+       {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::124355677152:root"
+          },
+          "Action": [
+            "s3:ListBucket",
+            "s3:GetObject"
+          ],
+          "Resource": [
+            "arn:aws:s3:::bucekt-policy-example-hd-398247",
+            "arn:aws:s3:::bucekt-policy-example-hd-398247/*"
+          ]
+       }
+    ]
+ }
