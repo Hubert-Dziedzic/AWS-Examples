@@ -53,5 +53,21 @@
   <footer>
     <p>&copy; 2024 Cat World. All rights reserved.</p>
   </footer>
+  <script type="text/javascript">
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://73zuau5cci.execute-api.eu-central-1.amazonaws.com/prod/hello", true);
+    // Send the proper header information along with the request
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        var results = JSON.parse(xhr.responseText);
+        consloe.console.log('results', 'results');
+        
+      }
+    };
+    xhr.send();
+    // xhr.send(new Int8Array());
+    // xhr.send(document);
+  </script>
 </body>
 </html>
