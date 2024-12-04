@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+aws cloudformation deploy \
+--template-file ../template.json \
+--stack-name my-sts-example-stack \
