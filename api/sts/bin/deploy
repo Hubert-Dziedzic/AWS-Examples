@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 aws cloudformation deploy \
---template-file ../template.json \
+--template-file template.yaml \
 --stack-name my-sts-example-stack \
+--capabilities CAPABILITY_IAM

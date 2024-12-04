@@ -3,9 +3,13 @@ Description: Create a role for assume and create a resource we`ll have access to
 Parameters:
   BucketName:
     Type: String
-    Default: "sts-example-hd"
+    Default: "sts-example-hd-2134"
 
 Resources:
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Ref BucketName
   StsRole:
     Type: 'AWS::IAM::Role'
     Properties:
