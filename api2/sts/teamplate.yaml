@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Create a role for us to assume and create a resource 
+
+Parameters:
+  BucketName:
+  Type: String
+  Default: "terraform-state-612781"
+
+Resources:
+    StsRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - s3.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: s3acces
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: '*'
+                Resource: [
+                  !Sub 'arn:aws:s3:::${BucketName}',
+                  !Sub 'arn:aws:s3:::${BucketName}/*'
+                ]
