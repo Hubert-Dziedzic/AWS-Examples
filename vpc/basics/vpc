@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# create vpc
+
+# create an IGW
+
+# attach an IGW
+
+
+# explicty assocaite subnet

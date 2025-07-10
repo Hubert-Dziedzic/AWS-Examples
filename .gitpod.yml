@@ -28,7 +28,7 @@ tasks:
   # https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#:~:text=Install%20or%20update%20the%20%20AWS%20CLI%201,--version%20command.%20C%3A%5C%3E%20%20aws%20--version%20%20
   - name: aws-cli
     env:
-      AWS_CLI_AUTO_PROMPT: on-portial
+      AWS_CLI_AUTO_PROMPT: on-partial
     init: echo 'init script' # runs during prebuild => https://www.gitpod.io/docs/configure/projects/prebuilds
     before: |
       cd /workspace 
