@@ -2,9 +2,23 @@
 
 # create vpc
 
+VPC_ID=$(aws ec2 create-vpc \
+--cidr-block "172.1.0.0/16" \
+--tag-specifications 'ResourceType=vpc,Tags=[{Key=Name,Value=my-vpc-5}]' \
+--region eu-west-2 \
+--query Vpc.VpcId \
+--output text)
+
+echo $VPC_ID
+
 # create an IGW
 
 # attach an IGW
 
+# create a new subnet
+
 
 # explicty assocaite subnet
+
+# add a route for RT to IGW
+
