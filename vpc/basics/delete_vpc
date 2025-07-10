@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ $# -lt 4 ]; then
+    echo " Usage: $0 <VPC_ID> <IGW_ID> <SUBNET_ID> <RT_ID>"
+    exit 1
+fi
+
+VPC_ID=$1
+IGW_ID=$2
+SUBNET_ID=$3
+RT_ID=$4
+
+echo " Starting VPC teardown for:"
+echo " VPC_ID=$VPC_ID"
+echo " IGW_ID=$IGW_ID"
+echo " SUBNET_ID=$SUBNET_ID"
+echo " RT_ID=$RT_ID"
+
+
+echo " Detaching Internet Gateway..."
+aws ec2 detach-internet-gateway --internet-gateway-id "$IGW_ID" --vpc-id "$VPC_ID"
+
+ASSOC_ID=$(aws ec2 describe-route-tables \
+  --route-table-ids "$RT_ID" \
+  --query "RouteTables[].Associations[?SubnetId=='$SUBNET_ID'].RouteTableAssociationId" \
+  --output text)
+
+if [ -n "$ASSOC_ID" ]; then
+    echo " Disassociating Route Table (ASSOC_ID=$ASSOC_ID)..."
+    aws ec2 disassociate-route-table --association-id "$ASSOC_ID"
+else
+    echo " No route table association found for subnet $SUBNET_ID"
+fi
+
+echo " Deleting route to 0.0.0.0/0 if exists..."
+aws ec2 delete-route \
+  --route-table-id "$RT_ID" \
+  --destination-cidr-block 0.0.0.0/0 || echo " No route found — skipping"
+
+
+echo " Deleting subnet..."
+aws ec2 delete-subnet --subnet-id "$SUBNET_ID"
+
+IS_MAIN=$(aws ec2 describe-route-tables \
+  --route-table-ids "$RT_ID" \
+  --query "RouteTables[].Associations[?Main==\`true\`]" \
+  --output text)
+
+if [ -z "$IS_MAIN" ]; then
+    echo " Deleting route table..."
+    aws ec2 delete-route-table --route-table-id "$RT_ID"
+else
+    echo " Route table $RT_ID is the main route table — cannot delete."
+fi
+
+
+echo " Deleting Internet Gateway..."
+aws ec2 delete-internet-gateway --internet-gateway-id "$IGW_ID"
+
+
+echo " Deleting VPC..."
+aws ec2 delete-vpc --vpc-id "$VPC_ID"
+
+echo " VPC teardown complete."
