@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Launch a simple EC2 for use with testing VPCs
+Parameters:
+  VpcId:
+    Type: String
+    Default: vpc-0f7606b4ebf7bb1ce
+  ImageId:
+    Type: String
+    Default: ami-003c9adf81de74b40
+  SubnetId:
+    Type: String 
+    Default: subnet-0691100d7620f0acf
+Resources:
+  MyEC2Instance: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      InstanceType: t2.micro
+      ImageId: !Ref ImageId
+      SubnetID: !Ref SubnetId
+      SecurityGrupIds:
+        - !GetAtt SG.GroupId
+
+  SG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow http to client host
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: -1
+          FromPort: -1
+          ToPort: -1
+          CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          FromPort: -1
+          ToPort: -1
+          CidrIp: 0.0.0.0/0
