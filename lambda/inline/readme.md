@@ -10,3 +10,9 @@ https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/i
 ```sh
 brew install cfn-lint
 ```
+
+# build and deploy
+```sh
+sam build
+sam deploy
+```
