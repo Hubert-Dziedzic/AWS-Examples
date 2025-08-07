@@ -1,0 +1,16 @@
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html#sam-resource-function-examples
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  InLineLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: python3.13
+      PackageType: Zip
+      InlineCode: |
+        def handler(event, context):
+            message = 'Hello {} {}!'.format(event['first_name'], event['last_name'])
+            return{
+                'message': message
+            }
