@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+aws s3 rm s3://sf-star-trek-14514312/inputs/picard.jpg --region eu-central-1
+aws s3 cp picard.jpg s3://sf-star-trek-14514312/inputs/picard.jpg --region eu-central-1
